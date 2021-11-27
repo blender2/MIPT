@@ -43,6 +43,7 @@ void print_error (string msg, vector<vector<string>> & conveer) {
 }
 
 void read_line(string & line) {
+    
     getline(cin, line);
 }
 
@@ -193,6 +194,12 @@ void split_line(string *_line,
 }
 
 void init_conveer(vector<vector<string>> *conveer, string *line) {
+    if(cin.eof()) {
+        conveer->clear();
+        conveer->push_back(vector<string> {"exit"});
+        return;
+    }
+
     vector<string> conveer_separated;
     split_line(line, &conveer_separated, "|");
 
@@ -502,6 +509,8 @@ void loop() {
         
         invitation();
         read_line(line);
+        
+
         init_conveer(&conveer, &line);
         init_redirections(conveer, redirs);
         // _print_conveer(conveer);
