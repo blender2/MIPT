@@ -1,0 +1,52 @@
+data2:
+    word 0
+    word 0
+    word 0
+    word 0
+    word 0
+    word 0
+    word 0
+    word 0
+    word 0
+    word 0
+print3:
+    syscall r3 102
+    lc r0 10
+    syscall r0 105
+    ret 0
+print34:
+    syscall r3 102
+    lc r0 10
+    syscall r0 105
+    syscall r4 102
+    syscall r0 105
+    ret 0
+exit:
+    lc r0 0
+    syscall r0 0
+main:
+    lc r3 1024
+    shli r3 20
+    lc r4 1
+    shri r3 1
+    calli print3
+    shri r3 1
+    calli print3
+    shri r3 1
+    calli print3
+    shri r3 1
+    calli print3
+    shri r3 2
+    calli print3
+    shri r3 3
+    calli print3
+    shri r3 4
+    calli print3
+    shri r3 3
+    calli print3
+    shri r3 2
+    calli print3
+    shri r3 1
+    calli print3
+    calli exit
+    end main

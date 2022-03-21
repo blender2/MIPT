@@ -1,0 +1,41 @@
+fibo:   
+    cmp r0,rz,2
+    cge pc,norec
+    add pc,lr,rz,0,0
+norec:
+    add r2,pc,cache ; r2 = &cache
+    ; check if already solved
+    ld r1, r2, r0, 3, 0 ; r1=cache[n]
+    cmp r1,rz,0
+    cgt pc,fast_way
+slow_way:    
+    st lr, sp, 8    ; ret 
+    st r0, sp, 8    ; save n
+    st r0, sp, 8    ; twice
+    sub r0,r0,rz,0,1 ; n--
+    bl fibo ;  r0=fibo(n-1)
+    ld r1, sp, 8 ; r1=n
+    st r0, sp, 8 ; push fibo(n-1)
+    sub r0, r1, rz, 0, 2 ; r0=n-2
+    bl fibo         ; r0=fibo(n-2)
+    ld r1, sp, 8 ; r1 = fibo(n-1)
+    add r0, r0, r1, 0, 0 ; r0=fibo(n-1)+fibo(n-2)
+    ld r1, sp, 8   ; n
+    st r0, r2, r1, 3, 0 ; cache[n] = ret     
+    ld pc, sp, 8    ; return to lr = top
+fast_way:
+    add r0,r1,rz,0,0
+    add pc,lr,rz,0,0
+    
+main:
+    add r0,rz,92
+    bl fibo
+    svc r0, rz, 102
+    add r0,rz,10
+    svc r0,rz,105
+    svc r0, rz, 0
+    
+cache:
+    bytes 800   ; unsigned long long [100]
+
+    end main
